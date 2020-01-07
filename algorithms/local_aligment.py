@@ -9,15 +9,16 @@ class SmithWaterman():
         self.insert = insert
         self.delete = delete
 
-    def score(self, seqA, seqB):
+    def score(self, seqA, seqB, alignment='local'):
         H = np.zeros((len(seqA) + 1, len(seqB) + 1), np.int)
 
         for i, j in itertools.product(range(1, H.shape[0]), range(1, H.shape[1])):
             match = H[i - 1, j - 1] + (self.match if seqA[i - 1] == seqB[j - 1] else - self.match)
             delete = H[i - 1, j] + self.delete
             insert = H[i, j - 1] + self.insert
-            H[i, j] = max(match, delete, insert, 0)
-        return H.max()
+            H[i, j] = max(match, delete, insert, 0) if alignment == 'local' else max(match, delete, insert)
+
+        return H.max() if alignment == 'local' else H[len(seqA), ].max()
 
 if __name__ == '__main__':
     import time
