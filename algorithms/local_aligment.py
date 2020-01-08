@@ -10,6 +10,8 @@ class SmithWaterman():
         self.delete = delete
 
     def score(self, seqA, seqB, alignment='local'):
+        if(len(seqA) > len(seqB)):
+            seqB, seqA = seqA, seqB
         H = np.zeros((len(seqA) + 1, len(seqB) + 1), np.int)
 
         for i, j in itertools.product(range(1, H.shape[0]), range(1, H.shape[1])):
@@ -22,9 +24,9 @@ class SmithWaterman():
 
 if __name__ == '__main__':
     import time
-    seqA = 'GAGATACATCTATAACCGGGAAGAGTACGTG'
-    seqB = 'CGCTTCGACAGCGACTGGGGCGAGTACCGGGCGGTGACAGAGCTGGGGC'
-    alg = SmithWaterman(2 , -1, -2)
+    seqA = 'ACTGAGAGATAGAGTCAGCTACGTCGATCGACTAGCTACGATCGACTGAGAGATAGAGTCAGCTACG'
+    seqB = 'ACGCTAGCATCGATCGATCGATCGATCGATCAGTCAGCTACGATCGATCGATCGCTGCTAGCTACGATCGA'
+    alg = SmithWaterman(3 , -2, -3)
 
     start = time.time()
     score = alg.score(seqA, seqB)
