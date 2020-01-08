@@ -1,5 +1,6 @@
 import file_handler as fh 
 from algorithms import local_aligment as local
+from clustering import MSC
 
 import time
 import sys
