@@ -2,7 +2,6 @@
 import time
 from enum import Enum
 
-
 def get_time_of_execution(f):
     """ Decorator to get time of execution """
 
@@ -21,7 +20,6 @@ class SampleScoring(Enum):
     MISMATCH = -3,
     GAP = -5
 
-
 class NeedlemanWunsch():
     def __init__(self, seqA, seqB, scoring=SampleScoring):
         self.seqA = seqA
@@ -33,7 +31,6 @@ class NeedlemanWunsch():
         self.scoring = scoring
         self.aln_pathways = []
 
-    @get_time_of_execution
     def run(self,):
         for i in range(self.m_rows):
             self.matrix[i][0] = [self.scoring.GAP.value * i, []]
@@ -44,15 +41,17 @@ class NeedlemanWunsch():
          for j in range(1, self.m_cols)]
 
         o_score = self.matrix[i][j][0]
-        bk_i = i
-        bk_j = j
+        #print(o_score)
+        return o_score
+      #  bk_i = i
+      #  bk_j = j
 
-        self.aligments = []
-        self.find_each_path(bk_i, bk_j)
-        
-        score = self.matrix[bk_i][bk_j][0]
-        print(score)
-        return score
+      #  self.aligments = []
+      #  self.find_each_path(bk_i, bk_j)
+      #  
+      #  score = self.matrix[bk_i][bk_j][0]
+      #  print(score)
+      #  return score
 
     def score(self, i, j):
         score = self.scoring.MATCH.value if (
@@ -96,6 +95,41 @@ class NeedlemanWunsch():
 
         return len(self.aln_pathways)
 
+    def backtrace(bk_i, bk_j):
+        for _e in self.aln_pathways:
+            i = bk_i - 1
+            j = bk_j - 1
+            side_aln = ''
+            top_aln = ''
+            step = 0
+            aln_info = []
+            for n_dir_c in range(len(_e)):
+                n_dir = _e[n_dir_c]
+                score = self.matrix[i+1][j+1][0]
+                step = step + 1
+                aln_info.append([step, score, n_dir])
+                if n_dir == '2':
+                    side_aln = side_aln + self.seqA[i]
+                    top_aln = top_aln + self.seqB[j]
+                    i = i-1
+                    j = j-1
+                elif n_dir == '1':
+                    side_aln = side_aln + '-'
+                    top_aln = top_aln + self.seqB[j]
+                    j = j-1
+                elif n_dir == '3':
+                    side_aln = side_aln + self.seqA[i]
+                    top_aln = top_aln + '-'
+                    i = i-1
+            aln_count = aln_count + 1
+            self.aligments.append(
+                [top_aln[::-1], side_aln[::-1], _e, aln_info, aln_count])
+
+@get_time_of_execution
+def run():
+    for i in range(0, 100):
+        nn = NeedlemanWunsch("ACTGAGAGATAGAGTCAGCTACGTCGATCGACTAGCTACGATCGACTGAGAGATAGAGTCAGCTACGTCGATCGACTAGCTACGATCGACTGAGAGATAGAGTCAGCTACGTCGATCGACTAGCTACGATCGACTGAGAGATAGAGTCAGCTACGTCGATCGACTAGCTACGATCGACTGAGAGATAGAGTCAGCTACGTCGATCGACTAGCTACGATCGACTGAGAGATAGAGTCAGCTACGTCGATCGACTAGCTACGATCGACTGAGAGATAGAGTCAGCTACGTCGATCGACTAGCTACGATCG", "ACGCTAGCATCGATCGATCGATCGATCGATCAGTCAGCTACGATCGATCGATCGCTGCTAGCTACGATCGATCGATCGTCAGTCAACGCTAGCATCGATCGATCGATCGATCGATCAGTCAGCTACGATCGATCGATCGCTGCTAGCTACGATCGATCGATCGTCAGTCAACGCTAGCATCGATCGATCGATCGATCGATCAGTCAGCTACGATACGCTAGCATCGATCGATCGATCGATCGATCAGTCAGCTACGATCGATCGATCGCTGCTAGCTACGATCGATCGATCGTCAGTCACGATCGATCGCTGCTAGCTACGATCGATCGATCGTCAGTCA")
+        nn.run()
+
 if __name__ == "__main__":
-    nn = NeedlemanWunsch("AATCGCTACAATCGCTACTATTACAATCGCTACTATTACAATCGCAATCGCTACAATCGCTACTATTACAATCGCTACTATTACAATCGCTACTATTACTATTACAATCGCTACAATCGCTACTATTACAATCGCTACTATTACAATCGCTACTATTACTATTACAATCGCTACAATCGCTACTATTACAATCGCTACTATTACAATCGCTACTATTACTATTACTACTATTACTATTAC", "AACGCACTATTAACGCACTATTACCATAACGCACTAAACGCACTATTAACGCACTATTACCATAACGCACTATTACCATAACGCACTATTACCATACCATAACGCACTATTAACGCACTATTACCATAACGCACTATTACCATAACGCACTATTACCATACCATAACGCACTATTAACGCACTATTACCATAACGCACTATTACCATAACGCACTATTACCATACCATTTACCATAACGCACTATTACCATACCAT")
-    nn.run()
+    run()
