@@ -21,24 +21,20 @@ int find_maximum(int p[], int n){
     return max;
 }
 
-int run(char genA[],  char genB[]){
-    char *strA;
-    char *strB;
-    int lenA = strlen(genA);
-	int lenB = strlen(genB);
-    if(lenA >= lenB){
-        strA =  (char *)malloc((lenB + 1) * sizeof(char));
-        strcpy(strA, genB);
-        strB =  (char *)malloc((lenA + 1) * sizeof(char)); 
-        strcpy(strB, genA);
-    } else {
-        strA =  (char *)malloc((lenA + 1) * sizeof(char));
-        strcpy(strA, genA);
-        strB =  (char *)malloc((lenB + 1) * sizeof(char)); 
-        strcpy(strB, genB);
-    }
-    lenA = strlen(strA);
-	lenB = strlen(strB);
+/* Swaps strings by swapping data*/
+void swap2(char *str1, char *str2) 
+{ 
+  char *temp = (char *)malloc((strlen(str1) + 1) * sizeof(char)); 
+  strcpy(temp, str1); 
+  strcpy(str1, str2); 
+  strcpy(str2, temp); 
+  free(temp); 
+}   
+
+int run(char strA[],  char strB[]){
+    swap2(strA, strB);
+    int lenA = strlen(strA);
+	int lenB = strlen(strB);
 
 	//Create empty table
 	for(int i=0;i<=lenA;++i){
@@ -49,17 +45,19 @@ int run(char genA[],  char genB[]){
 	}
 
     int max = 0;
-    int values[3] = {0};
+    int values[4] = {0};
     for(int i = 1; i <= lenA; ++i) {
 		for(int j = 1; j <= lenB; ++j) {
             if(strA[i-1] == strB[j-1]){
                 values[0] = (SWArray[i-1][j-1] + Match);
+            }else{
+                values[0] = (SWArray[i-1][j-1] + MissMatch);
             }
 
             values[1] = (SWArray[i-1][j] + GapPenalty);
-            values[2] = (SWArray[i][j-1] + MissMatch);
+            values[2] = (SWArray[i][j-1] + GapPenalty);
 
-            SWArray[i][j] = find_maximum(values, 3);
+            SWArray[i][j] = find_maximum(values, 4);
             if(SWArray[i][j] > max){
                 max = SWArray[i][j];
             }
