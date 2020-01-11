@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "global.h"
+#include "globalAlg.h"
 
 #define MATCH 5
 #define MISMATCH -3
@@ -14,15 +14,12 @@ int find_maximum(int p[], int n){
             max = p[i];
         }
     }
-    
-    printf("%d %d %d\n\r", p[0], p[1], p[2]);
     return max;
 }
 
 int run(char genA[],  char genB[]){
     int rows = strlen(genA) + 1;
 	int cols = strlen(genB) + 1;
-
     int *matrix = calloc(rows * cols, sizeof(int));
     
     for(int i = 0; i < rows; i++)
@@ -35,7 +32,7 @@ int run(char genA[],  char genB[]){
     int score;
     for(int i = 1; i < rows; i++) {
 		for(int j = 1; j < cols; j++) {
-            if(strcmp(genA[i-1], genB[j-1]) == 0){
+            if(genA[i-1] == genB[j-1]){
                 score = MATCH;
             } else {
                 score = MISMATCH;
