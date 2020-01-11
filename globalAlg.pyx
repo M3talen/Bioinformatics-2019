@@ -1,4 +1,4 @@
-cdef extern from "global.h":
+cdef extern from "globalAlg.h":
     int run(char genA[],  char genB[])
 
 def py_run(genA : bytes, genB : bytes) -> int:
