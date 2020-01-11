@@ -4,10 +4,10 @@ import itertools
 import numpy as np 
 
 class SmithWaterman():
-    def __init__(self, match, insert, delete):
+    def __init__(self, match, mismatch, gap):
         self.match = match
-        self.insert = insert
-        self.delete = delete
+        self.mismatch = mismatch
+        self.gap = gap
 
     def score(self, seqA, seqB, alignment='local'):
         if(len(seqA) > len(seqB)):
@@ -15,10 +15,10 @@ class SmithWaterman():
         H = np.zeros((len(seqA) + 1, len(seqB) + 1), np.int)
 
         for i, j in itertools.product(range(1, H.shape[0]), range(1, H.shape[1])):
-            match = H[i - 1, j - 1] + (self.match if seqA[i - 1] == seqB[j - 1] else - self.match)
-            delete = H[i - 1, j] + self.delete
-            insert = H[i, j - 1] + self.insert
-            H[i, j] = max(match, delete, insert, 0) if alignment == 'local' else max(match, delete, insert)
+            match = H[i - 1, j - 1] + (self.match if seqA[i - 1] == seqB[j - 1] else + self.mismatch)
+            gap = H[i - 1, j] + self.gap
+            mismatch = H[i, j - 1] + self.gap
+            H[i, j] = max(match, gap, mismatch, 0) if alignment == 'local' else max(match, gap, mismatch)
 
         return H.max() if alignment == 'local' else H[len(seqA), ].max()
 
