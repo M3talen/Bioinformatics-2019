@@ -1,6 +1,6 @@
 import file_handler as fh 
 from algorithms import global_aligment as globalAlg
-#from clustering import hiearhical
+from clustering import hiearhical
 
 import time
 import sys
