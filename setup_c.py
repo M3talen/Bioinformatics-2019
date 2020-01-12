@@ -3,12 +3,12 @@ from distutils.extension import Extension
 from Cython.Build import cythonize
 
 examples_extension = Extension(
-    "globalAlg",
-    ["globalAlg.pyx", "clib/globalAlg.c"],
+    "alignment",
+    ["alignment.pyx", "clib/alignment.c"],
     include_dirs= ["clib"],
-    depends=["globalAlg.h"]
+    depends=["alignment.h"]
 )
 setup(
-    name="globalAlg",
+    name="alignment",
     ext_modules=cythonize([examples_extension])
 )

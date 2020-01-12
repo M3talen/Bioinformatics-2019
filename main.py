@@ -1,12 +1,13 @@
 import file_handler as fh 
-from algorithms import global_aligment as globalAlg
+#from algorithms import global_aligment as globalAlg
 from clustering import hiearhical
 
 import time
 import sys
 import numpy as np
 import itertools
-import local
+import alignment
+import pickle
 
 input_file = sys.argv[1]
 
@@ -25,7 +26,7 @@ for i,j in itertools.product(range(len(data[0:N])), range(len(data[0:N]))):
     if(distance_matrix[j][i] != None):
         distance_matrix[i][j] = distance_matrix[j][i]
     else:
-        score = local.py_run(str.encode(data[i]['seq']), str.encode(data[j]['seq']))
+        score = alignment.py_local(str.encode(data[i]['seq']), str.encode(data[j]['seq']))
         distance_matrix[i][j] = score
 #for i, seqA in enumerate(data[0:N]):
 #    for j, seqB in enumerate(data[0:N]):
@@ -46,6 +47,11 @@ print(f'Execution time (distance matrix): {(end - start)} s')
 #            d = 0
 #        print("%5d"%(d), end = '')
 #    print(']')
+
+distance_matrix = np.array(distance_matrix)
+filename = "matrix.pickle"
+#with open(filename, 'wb') as handle:
+#    pickle.dump({'matrix' : distance_matrix}, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 print(f"shape: ({len(distance_matrix)},{len(distance_matrix[0])})")
 

@@ -1,4 +1,7 @@
-import local
+import alignment
 
-score = local.py_run(b"GA", b"GATT")
+for i in range(10000):
+    score = alignment.py_local(b"ACTGAGAGATAGAGTCAGCTACGTCGATCGACTAGCTACGATCGACTGAGAGATAGAGTCAGCTACG", 
+                            b"ACGCTAGCATCGATCGATCGATCGATCGATCAGTCAGCTACGATCGATCGATCGCTGCTAGCTACGATCGA")
+    print(i)
 print(score)
