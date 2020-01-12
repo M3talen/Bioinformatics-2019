@@ -75,9 +75,9 @@ print(f'Execution time (distance matrix): {(end - start)} s')
 #    print(']')
 
 distance_matrix = np.array(distance_matrix)
-filename = "matrix.pickle"
-#with open(filename, 'wb') as handle:
-#    pickle.dump({'matrix' : distance_matrix}, handle, protocol=pickle.HIGHEST_PROTOCOL)
+filename = "matrix_"+input_file.split('\\')[-1].split('.')[0]+".pickle"
+with open(filename, 'wb') as handle:
+    pickle.dump({'matrix' : distance_matrix}, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 print(f"shape: ({len(distance_matrix)},{len(distance_matrix[0])})")
 
