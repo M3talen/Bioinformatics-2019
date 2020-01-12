@@ -1,5 +1,4 @@
 import file_handler as fh 
-#from algorithms import global_aligment as globalAlg
 from clustering import hiearhical
 
 import time
@@ -8,12 +7,13 @@ import numpy as np
 import itertools
 import alignment
 import pickle
+from tqdm import tqdm
 
 input_file = sys.argv[1]
 data = fh.read(input_file)
-#alg = globalAlg.NeedlemanWunsch()
 print(f"data length: {len(data)}")
-#print(data[:5])
+
+start = time.time()
 hist = {}
 for d in data:
     key = len(d['seq'])
@@ -25,21 +25,19 @@ p = {}
 for key in hist:
     p[key] = len(hist[key])
 
-
 sorted_hist = sorted(p.items(), key = 
              lambda kv:(kv[1], kv[0]))
 max_len = sorted_hist[-1][0]
-#print(max_len)
-#print(sorted_hist)
+
 data_extrude = [p[0] for p in sorted_hist if abs(p[0]-max_len) <= 5]
-#print(sum(data_extrude))
-#print(data_extrude)
 data = []
 for i in data_extrude:
     d = hist[i]
     for e in d:
         data.append(e)
 
+end = time.time()
+print(f'Execution time (hist): {(end - start)} s')
 print(f"data length(after): {len(data)}")
 
 N = len(data)
@@ -48,7 +46,7 @@ for i in range(len(data[0:N])):
     distance_matrix.append([None] * N)
 
 start = time.time()
-for i,j in itertools.product(range(len(data[0:N])), range(len(data[0:N]))):
+for i,j in tqdm(itertools.product(range(len(data[0:N])), range(len(data[0:N]))), total=N*N):
     if(distance_matrix[j][i] != None):
         distance_matrix[i][j] = distance_matrix[j][i]
     else:
