@@ -2,7 +2,7 @@
 from sklearn.cluster import DBSCAN
 import numpy as np
 
-class HierarchicalClustering():
+class DBSCANClustering():
     def __init__(self):
         self.algorithm = DBSCAN(eps=0.05, min_samples=10, metric="precomputed")
 
@@ -20,6 +20,8 @@ class HierarchicalClustering():
         beta = 1
         centorids = []
         for label in cluster_dict:
+            if label == -1:
+                continue
             cluster = cluster_dict[label]
             print(f"Cluster {label}, length: {len(cluster)}")
             distances = []
@@ -32,8 +34,5 @@ class HierarchicalClustering():
 
             distances = np.asarray(distances)
             index = distances.sum(axis=1).argmin()
-            centorids.append([cluster[index][1], label])
+            centorids.append(cluster[index][1])
         return centorids
-
-    def get_labels(self):
-        return self.cluster.labels_
