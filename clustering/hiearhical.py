@@ -1,10 +1,10 @@
 #import scipy.cluster.hierarchy as shc
-from sklearn.cluster import AgglomerativeClustering
+from sklearn.cluster import DBSCAN
 import numpy as np
 
 class HierarchicalClustering():
     def __init__(self):
-        self.algorithm = AgglomerativeClustering(n_clusters=3, affinity='precomputed', linkage='single')
+        self.algorithm = DBSCAN(eps=0.5, min_samples=50)
 
     def fit(self, distance_matrix):
         self.cluster = self.algorithm.fit(distance_matrix)

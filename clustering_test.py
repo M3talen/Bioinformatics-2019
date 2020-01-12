@@ -1,10 +1,11 @@
 import pickle
 import numpy as np
 from clustering import hiearhical
-
+from sklearn.preprocessing import normalize
 import time
 import sys
 import file_handler as fh
+from sklearn.preprocessing import MinMaxScaler
 
 input_file = sys.argv[1]
 data_fasta = fh.read(input_file)
@@ -20,9 +21,14 @@ print(data.shape)
 print(data)
 max_el = data.max()
 data = np.array([i/max_el for i in data])
+
+#data = data / np.linalg.norm(data)
+data = 1/data
+
 data = - np.log(data)
 data = abs(data)
-# data = 1/data
+#min_max_scaler = MinMaxScaler()
+#data = min_max_scaler.fit_transform(data)
 print(data)
 
 start = time.time()
