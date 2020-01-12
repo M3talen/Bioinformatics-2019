@@ -4,9 +4,9 @@
 
 #include "alignment.h"
 
-#define MATCH 5
-#define MISMATCH -3
-#define GAP -5
+#define MATCH 0
+#define MISMATCH -1
+#define GAP -1
 
 int find_maximum(int p[], int n)
 {
