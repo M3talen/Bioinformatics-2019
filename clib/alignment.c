@@ -33,10 +33,10 @@ int global_score(char genA[], char genB[]){
 	int cols = strlen(genB) + 1;
     int *matrix = calloc(rows * cols, sizeof(int));
     
-    for(int i = 0; i < rows; i++)
-        *(matrix + i*rows) = GAP * i;
+    for(int i = 0; i < cols; i++)
+        *(matrix + i*cols) = GAP * i;
     
-    for(int j = 0; j < cols; j++)
+    for(int j = 0; j < rows; j++)
         *(matrix + j) = GAP * j;
 
     int values[3] = {0};
@@ -49,14 +49,14 @@ int global_score(char genA[], char genB[]){
                 score = MISMATCH;
             }
 
-            values[0] = *(matrix + i*rows + j-1) + GAP;
-            values[1] = *(matrix + (i-1)*rows + j) + GAP;
-            values[2] = *(matrix + (i-1)*rows + j-1) + score;
+            values[0] = *(matrix + i*cols + j-1) + GAP;
+            values[1] = *(matrix + (i-1)*cols + j) + GAP;
+            values[2] = *(matrix + (i-1)*cols + j-1) + score;
 
-            *(matrix + i*rows + j) = find_maximum(values, 3);
+            *(matrix + i*cols + j) = find_maximum(values, 3);
         }
     }
-    int res = (int) *(matrix + (rows - 1)*rows + cols - 1);
+    int res = (int) *(matrix + (cols - 1)*cols + rows - 1);
     free(matrix);
     return res;
 }
@@ -73,10 +73,10 @@ int local_score(char strA[],  char strB[]){
     int *matrix = calloc(lenA * lenB, sizeof(int));
 
 	//Create empty table
-	for(int i=0;i<lenA;++i){
-		*(matrix + i*lenA)=0;
+	for(int i=0;i<lenB;++i){
+		*(matrix + i*lenB)=0;
 	}
-	for(int j=0;j<lenB;j++){
+	for(int j=0;j<lenA;j++){
 		*(matrix + j) = 0;
 	}
 
@@ -91,13 +91,13 @@ int local_score(char strA[],  char strB[]){
                 score = MISMATCH;
             }
 
-            values[0] = *(matrix + (i-1)*lenA + j) + GAP;
-            values[1] = *(matrix + i*lenA + j-1) + GAP;
-            values[2] = *(matrix + (i-1)*lenA + j-1) + score;
+            values[0] = *(matrix + (i-1)*lenB + j) + GAP;
+            values[1] = *(matrix + i*lenB + j-1) + GAP;
+            values[2] = *(matrix + (i-1)*lenB + j-1) + score;
 
-            *(matrix + i*lenA + j) = find_maximum(values, 4);
-            if(*(matrix + i*lenA + j) > max){
-                max = *(matrix + i*lenA + j);
+            *(matrix + i*lenB + j) = find_maximum(values, 4);
+            if(*(matrix + i*lenB + j) > max){
+                max = *(matrix + i*lenB + j);
             }
         }
     }
