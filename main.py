@@ -26,7 +26,7 @@ for i,j in itertools.product(range(len(data[0:N])), range(len(data[0:N]))):
     if(distance_matrix[j][i] != None):
         distance_matrix[i][j] = distance_matrix[j][i]
     else:
-        score = alignment.py_local(str.encode(data[i]['seq']), str.encode(data[j]['seq']))
+        score = alignment.py_global(str.encode(data[i]['seq']), str.encode(data[j]['seq']))
         distance_matrix[i][j] = score
 #for i, seqA in enumerate(data[0:N]):
 #    for j, seqB in enumerate(data[0:N]):

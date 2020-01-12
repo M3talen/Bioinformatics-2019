@@ -26,19 +26,27 @@ void swap(char *str1, char *str2)
   strcpy(str1, str2); 
   strcpy(str2, temp); 
   free(temp); 
-}   
+}
+
+void print_matrix(int *matrix, int rows, int cols){
+    for(int i = 0; i < rows; i++) {
+        printf("\n");
+		for(int j = 0; j < cols; j++) {
+            printf("%5d", *(matrix + i*cols + j));
+        }
+    }
+    printf("\n");
+}
 
 int global_score(char genA[], char genB[]){
     int rows = strlen(genA) + 1;
 	int cols = strlen(genB) + 1;
     int *matrix = calloc(rows * cols, sizeof(int));
-    
-    for(int i = 0; i < cols; i++)
+    for(int i = 0; i < rows; i++)
         *(matrix + i*cols) = GAP * i;
     
-    for(int j = 0; j < rows; j++)
+    for(int j = 0; j < cols; j++)
         *(matrix + j) = GAP * j;
-
     int values[3] = {0};
     int score;
     for(int i = 1; i < rows; i++) {
@@ -56,7 +64,7 @@ int global_score(char genA[], char genB[]){
             *(matrix + i*cols + j) = find_maximum(values, 3);
         }
     }
-    int res = (int) *(matrix + (cols - 1)*cols + rows - 1);
+    int res = (int) *(matrix + (rows - 1)*cols + cols - 1);
     free(matrix);
     return res;
 }
@@ -104,3 +112,13 @@ int local_score(char strA[],  char strB[]){
     free(matrix);
     return max;
 }
+
+//int main(){
+//    char *a = "GTCGA";
+//    char *b = "GAGAGA";
+//
+//    int score = global_score(a, b);
+//    printf("score: %d\n", score);
+//    printf("hello world");
+//    return 0;
+//}
