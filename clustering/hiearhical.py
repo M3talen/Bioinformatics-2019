@@ -4,7 +4,7 @@ import numpy as np
 
 class HierarchicalClustering():
     def __init__(self):
-        self.algorithm = DBSCAN(eps=0.5, min_samples=50)
+        self.algorithm = DBSCAN(eps=0.05, min_samples=10, metric="precomputed")
 
     def fit(self, distance_matrix):
         self.cluster = self.algorithm.fit(distance_matrix)
@@ -31,8 +31,8 @@ class HierarchicalClustering():
                     distances[b].append(distance_matrix[x][y])
 
             distances = np.asarray(distances)
-            index = np.exp(-beta*distances / (distances.std() + 0.00000001)).sum(axis=1).argmax()
-            centorids.append(cluster[index][1])
+            index = distances.sum(axis=1).argmin()
+            centorids.append([cluster[index][1], label])
         return centorids
 
     def get_labels(self):
