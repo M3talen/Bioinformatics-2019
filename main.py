@@ -10,11 +10,37 @@ import alignment
 import pickle
 
 input_file = sys.argv[1]
-
-
 data = fh.read(input_file)
 #alg = globalAlg.NeedlemanWunsch()
 print(f"data length: {len(data)}")
+#print(data[:5])
+hist = {}
+for d in data:
+    key = len(d['seq'])
+    if key not in hist:
+        hist[key] = []
+    hist[key].append(d)
+
+p = {}
+for key in hist:
+    p[key] = len(hist[key])
+
+
+sorted_hist = sorted(p.items(), key = 
+             lambda kv:(kv[1], kv[0]))
+max_len = sorted_hist[-1][0]
+#print(max_len)
+#print(sorted_hist)
+data_extrude = [p[0] for p in sorted_hist if abs(p[0]-max_len) <= 5]
+#print(sum(data_extrude))
+#print(data_extrude)
+data = []
+for i in data_extrude:
+    d = hist[i]
+    for e in d:
+        data.append(e)
+
+print(f"data length(after): {len(data)}")
 
 N = len(data)
 distance_matrix = []
@@ -26,7 +52,7 @@ for i,j in itertools.product(range(len(data[0:N])), range(len(data[0:N]))):
     if(distance_matrix[j][i] != None):
         distance_matrix[i][j] = distance_matrix[j][i]
     else:
-        score = alignment.py_global(str.encode(data[i]['seq']), str.encode(data[j]['seq']))
+        score = alignment.py_local(str.encode(data[i]['seq']), str.encode(data[j]['seq']))
         distance_matrix[i][j] = score
 #for i, seqA in enumerate(data[0:N]):
 #    for j, seqB in enumerate(data[0:N]):
