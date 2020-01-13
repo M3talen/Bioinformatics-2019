@@ -1,5 +1,5 @@
 """
-    Author : Zvonimir Kuciš
+    Author : Zvonimir Kucis
     Create python modules from compiled C code.
 """
 from distutils.core import setup
