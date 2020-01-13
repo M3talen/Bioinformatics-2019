@@ -1,5 +1,5 @@
 /* 
-    Author : Zvonimir Kučiš
+    Author : Zvonimir Kuciš
 */
 #include <stdio.h>
 #include <stdlib.h>

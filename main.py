@@ -1,5 +1,5 @@
 """
-        Authors : Zvonimir Kučiš, Zlatko Verk, Alen Štruklec
+        Authors : Zvonimir Kuciš, Zlatko Verk, Alen Struklec
 """
 import file_handler as fh 
 from clustering import DBSCANClustering

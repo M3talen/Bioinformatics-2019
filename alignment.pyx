@@ -1,5 +1,5 @@
 """
-    Author : Zvonimir Kučiš
+    Author : Zvonimir Kucis
     Code wrapper for calling C functions from Python scripts.
 """
 

@@ -3,7 +3,7 @@ from sklearn.cluster import DBSCAN
 import numpy as np
 
 """
-    Author : Alen Štruklec
+    Author : Alen Struklec
     Perform DBSCAN to cluster data
 """
 class DBSCANClustering():

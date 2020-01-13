@@ -1,5 +1,5 @@
 """ 
-    Author : Alen Štruklec
+    Author : Alen Struklec
 """
 
 """

@@ -1,7 +1,7 @@
 # Bioinformatics
 Project assignment for Bioinformatics class at Faculty of Electrical Engineering and Computing, University of Zagreb.
 
-Authors : Zvonimir Kučiš, Zlatko Verk, Alen Štruklec
+Authors : Zvonimir Kučis, Zlatko Verk, Alen Štruklec
 
 # Instructions
 Python3.6+ required.
@@ -15,7 +15,7 @@ build.bat
 
 For Linux :
 ```sh
-./build.sh
+bash build.sh
 ```
 
 After that the program can be run with :
