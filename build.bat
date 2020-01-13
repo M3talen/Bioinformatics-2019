@@ -1,3 +1,4 @@
+python -m pip install -r requirements.txt
 cd clib
 gcc -c -Ofast alignment.c
 ar rcs alignment.lib alignment.o

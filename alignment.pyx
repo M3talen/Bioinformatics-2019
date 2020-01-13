@@ -1,3 +1,8 @@
+"""
+    Author : Zvonimir Kučiš
+    Code wrapper for calling C functions from Python scripts.
+"""
+
 cdef extern from "alignment.h":
     int local_score(char genA[], char genB[])
     int global_score(char genA[], char genB[])
