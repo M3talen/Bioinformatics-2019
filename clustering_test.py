@@ -1,6 +1,6 @@
 import pickle
 import numpy as np
-from clustering import hiearhical
+from clustering import DBSCANClustering
 from sklearn.preprocessing import normalize
 import time
 import sys
@@ -34,7 +34,7 @@ for i in data_extrude:
 
 
 
-alg = hiearhical.HierarchicalClustering()
+alg = DBSCANClustering.DBSCANClustering()
 
 filename = "matrix_"+input_file.split('\\')[-1].split('.')[0]+".pickle"
 with open(filename, 'rb') as handle:
@@ -69,3 +69,6 @@ print(f"time: {(end-start)/1000} ms")
 
 #centorids = [x[0]['seq'] for x in centorids]
 print(centorids)
+print(f"Number of clusters: {len(centorids)}")
+for c in centorids:
+    print(f"Consensus ({len(c['seq'])})\n{c['seq']}\n")
