@@ -1,3 +1,7 @@
+"""
+    Author : Zvonimir Kučiš
+    Create python modules from compiled C code.
+"""
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Build import cythonize

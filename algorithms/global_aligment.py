@@ -1,30 +1,20 @@
-# Needleman-Wunsch algorithm
-import time
-from enum import Enum
-from pandas import *
+""" 
+    Author : Alen Štruklec
+"""
 
-def get_time_of_execution(f):
-    """ Decorator to get time of execution """
-
-    def wrapped(*args, **kwargs):
-        start_time = time.time()
-        res = f(*args, **kwargs)
-        print(f'Time elapsed to {f.__name__ } (s): { str(time.time() - start_time)}')
-        return res
-
-    return wrapped
-
-
-class SampleScoring(Enum):
-    MATCH = 5,
-    MISMATCH = -3,
-    GAP = -5
-
+"""
+    Needleman-Wunsch algorithm
+    Scoring follows this indexes :
+    [0] MATCH = 5,
+    [1] MISMATCH = -3,
+    [2] GAP = -5    
+"""
 class NeedlemanWunsch():
     def __init__(self, scoring=[5,-3,-5]):
         self.scoring = scoring
-
-
+    """
+        Run Needleman-Wunsch algorithm on seqA and seqB
+    """
     def run(self, seqA, seqB,):
         self.seqA = seqA
         self.seqB = seqB
@@ -33,19 +23,25 @@ class NeedlemanWunsch():
         
         self.matrix = [[None for i in range(self.m_cols)] for i in range(self.m_rows)] # Initiating Score Matrix
         
-        self.aln_pathways = []
-        
+        # Populate matrix 
         for i in range(self.m_rows):
             self.matrix[i][0] = self.scoring[2] * i
         for j in range(self.m_cols):
             self.matrix[0][j] = self.scoring[2] * j
 
-        [self.score(i, j) for i in range(1, self.m_rows)
-         for j in range(1, self.m_cols)]
+        # Calculate similarity 
+        [self.score(i, j) for i in range(1, self.m_rows) for j in range(1, self.m_cols)]
 
         o_score = self.matrix[i][j]
         return o_score
     
+    """ 
+            Calculate similarity with the maximum value from the following :
+            D_(i-1)_(j-1) + MATCH     if seqA_i == seqB_i 
+            D_(i-1)_(j-1) + MISSMATCH if seqA_i != seqB_i 
+            D_(i-1)_(j)   + GAP       if seqB_i == - 
+            D_(i)_(j-1)   + GAP       if seqA_i == - 
+    """
     def score(self, i, j):
         score = self.scoring[0] if (self.seqA[i-1] == self.seqB[j-1]) else self.scoring[1]
         h_val = self.matrix[i][j-1] + self.scoring[2]
@@ -55,14 +51,3 @@ class NeedlemanWunsch():
         
         self.matrix[i][j] = max(o_val)
         
-
-@get_time_of_execution
-def run():
-    for i in range(0, 1):
-        nn = NeedlemanWunsch()
-        x = nn.run( "ACGA", 
-                    "ACGC")
-        print(x)
-
-if __name__ == "__main__":
-    run()

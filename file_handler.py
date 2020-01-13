@@ -1,3 +1,6 @@
+"""
+    Author : Zlatko Verk
+"""
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
@@ -44,22 +47,3 @@ def write(data, filename):
                                     description=element['description'])
             records.append(sequence)
         fasta_out.write_file(records)
-
-# Testing the speed of read/write functions.
-if __name__ == '__main__':
-    import sys
-    import time
-    input_file = sys.argv[1]
-    output_file = sys.argv[2]
-
-    # reading
-    start = time.time()
-    data = read(input_file)
-    end = time.time()
-    print(f"reading time: {(end - start)*1000} ms")
-
-    #writing
-    start = time.time()
-    write(data, output_file)
-    end = time.time()
-    print(f"writing time: {(end - start)*1000} ms")
