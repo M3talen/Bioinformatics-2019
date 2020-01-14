@@ -4,7 +4,7 @@ Project assignment for Bioinformatics class at Faculty of Electrical Engineering
 Authors : Zvonimir Kučis, Zlatko Verk, Alen Štruklec
 
 # Instructions
-Python3.6+ required.
+Python3.6+ and C compiler (gcc) required.
 
 After cloning repository run the folowing instructions : 
 
